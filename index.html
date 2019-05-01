@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input value="text" type="text">
+
+    <div class="output"></div>
+
+    <script>
+
+        let input = document.querySelector('input')
+
+        function render () {
+            document.querySelector('.output').textContent = uglify(input.value)
+        }
+
+        render()
+
+        input.addEventListener('input', () => {
+            render()
+        })
+
+        function uglify (input) {
+            let output = []
+
+            for (let i = 0; i < input.length; i++) {
+                let code = input[i].charCodeAt()
+
+                output = output.map((value, index) => {
+                    return Math.abs(value - code)
+                })
+
+                output.push(code)
+            }
+
+            let string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+            output = output.map(letter => {
+                return string[letter % string.length]
+            })
+
+            return output.join('')
+        }
+        
+    </script>
+</body>
+</html>
